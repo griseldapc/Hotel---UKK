@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     jumlah_kamar: DataTypes.INTEGER,
     tipeKamarId: DataTypes.INTEGER,
     status_pemesanan: DataTypes.ENUM('baru','check_in','check_out'),
-    id_user: DataTypes.INTEGER
+    userId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'pemesanan',
