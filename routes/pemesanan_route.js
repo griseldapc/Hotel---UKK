@@ -8,9 +8,10 @@ const pemesananController = require(`../controllers/pemesanan_controller`)
 const auth = require("../auth/auth")
 
 app.get("/getAllPemesanan", pemesananController.getAllPemesanan)
-app.post("/findPemesanan", pemesananController.findPemesanan)
+app.post("/findPemesanan/", pemesananController.findPemesanan)
 app.post("/addPemesanan", auth.authVerify, pemesananController.addPemesanan)
 app.put("/updatePemesanan/:id", auth.authVerify, pemesananController.updatePemesanan)
 app.delete("/deletePemesanan/:id", auth.authVerify, pemesananController.deletePemesanan)
+app.put("/updateStatusPemesanan/:id", pemesananController.updateStatusPemesanan);
 
 module.exports = app

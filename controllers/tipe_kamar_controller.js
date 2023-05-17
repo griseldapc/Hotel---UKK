@@ -36,7 +36,7 @@ exports.findTipe_kamar = async (request, response) => {
 }
 
 exports.addTipe_kamar = (request, response) => {
-    upload(request, response, async error => {
+    upload(request, response, async (error) => {
         if (error) {
             return response.json({ message: error })
         }
@@ -49,9 +49,12 @@ exports.addTipe_kamar = (request, response) => {
 
         let newTipe_kamar = {
             nama_tipe_kamar: request.body.nama_tipe_kamar,
-            foto: request.file.filename,
+            // foto: request.file.filename,
             harga: request.body.harga,
             deskripsi: request.body.deskripsi
+        }
+        if(request.file && request.file.filename) {
+            newTipe_kamar.foto = request.file.filename
         }
 
         Tipe_kamarModel.create(newTipe_kamar).then(result => {
@@ -77,7 +80,7 @@ exports.deleteTipe_kamar = (request, response) => {
         .then(result => {
             return response.json({
                 success: true,
-                message: `Data tipe kamar has been updated`
+                message: `Data tipe kamar has been deleted`
             })
         })
         .catch(error => {
@@ -97,9 +100,13 @@ exports.updateTipe_kamar = async (request, response) => {
         let id = request.params.id
         let tipe_kamar = {
             nama_tipe_kamar: request.body.nama_tipe_kamar,
-            foto: request.file.filename,
+            // foto: request.file.filename,
             harga: request.body.harga,
             deskripsi: md5(request.body.deskripsi),
+        }
+
+        if(request.file && request.file.filename) {
+            newUser.foto = request.file.filename
         }
 
         if (request.file) {

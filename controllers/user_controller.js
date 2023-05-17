@@ -60,18 +60,17 @@ exports.getAllUser = async (request, response) => {
         message: `ini adalah semua data user`
     })
 }
-
+//filtering
 exports.findUser = async (request, response) => {
     let nama_user = request.body.nama_user
     let email = request.body.email
-    let role = request.body.role
+   
 
     let users = await modelUser.findAll({
         where: {
             [Op.and]: [
                 { nama_user: { [Op.substring]: nama_user } },
-                { email: { [Op.substring]: email } },
-                { role: { [Op.substring]: role } }
+                { email: { [Op.substring]: email } }
             ]
         }
     })
@@ -96,11 +95,20 @@ exports.addUser = (request, response) => {
 
         let newUser = {
             nama_user: request.body.nama_user,
-            foto: request.file.filename,
+            // foto: request.file.filename,
             email: request.body.email,
             password: md5(request.body.password),
             role: request.body.role,
         }
+
+        if(request.file && request.file.filename) {
+            newUser.foto = request.file.filename
+        }
+        
+        console.log(
+            `email: ${newUser.email}, 
+ password: ${newUser.password}`
+        );
 
         modelUser.create(newUser).then(result => {
             return response.json({
@@ -145,10 +153,14 @@ exports.updateUser = async (request, response) => {
         let id = request.params.id
         let user = {
             nama_user: request.body.nama_user,
-            foto: request.file.filename,
+            // foto: request.file.filename,
             email: request.body.email,
             password: md5(request.body.password),
             role: request.body.role,
+        }
+
+        if(request.file && request.file.filename) {
+            user.foto = request.file.filename
         }
 
         if (request.file) {

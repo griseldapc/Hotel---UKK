@@ -1,16 +1,21 @@
 const { request, response } = require("express");
-// x
 const { findTipekamar } = require("./tipe_kamar_controller");
 const kamarModel = require("../models/index").kamar;
-// const tipe_kamarModel = require("../models/index").tipe_kamar;
+const Tipe_kamarModel = require("../models/index").tipe_kamar
 const Op = require("sequelize").Op;
 
 exports.getAllKamar = async (request, response) => {
-  let kamars = await kamarModel.findAll();
+  let kamars = await kamarModel.findAll({
+    include: {
+      model: Tipe_kamarModel,
+      attributes: ['nama_tipe_kamar']
+    }
+  });
   return response.json({
     success: true,
     data: kamars,
     message: "All rooms have been loaded",
+
   });
 };
 
