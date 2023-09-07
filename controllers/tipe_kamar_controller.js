@@ -92,30 +92,32 @@ exports.deleteTipe_kamar = (request, response) => {
 }
 
 
+//  
+
 exports.updateTipe_kamar = async (request, response) => {
     upload(request, response, async error => {
         if (error) {
             return response.json({ message: error })
         }
-        let id = request.params.id
+        let idTipe_kamar = request.params.id
         let tipe_kamar = {
             nama_tipe_kamar: request.body.nama_tipe_kamar,
             // foto: request.file.filename,
             harga: request.body.harga,
-            deskripsi: md5(request.body.deskripsi),
+            deskripsi: request.body.deskripsi,
         }
 
         if(request.file && request.file.filename) {
-            newUser.foto = request.file.filename
+            tipe_kamar.foto = request.file.filename
         }
 
         if (request.file) {
             const selectedTipe_kamar = await Tipe_kamarModel.findOne({
-                where: { id: id }
+                where: { id: idTipe_kamar }
             })
 
             const oldFotoTipe_kamar = selectedTipe_kamar.foto
-            const pathFoto = path.join(__dirname, `../foto`, oldFotoTipe_kamar)
+            const pathFoto = path.join(__dirname, `./foto`, oldFotoTipe_kamar)
 
             if (fs.existsSync(pathFoto)) {
                 fs.unlink(pathFoto, error =>
@@ -124,7 +126,7 @@ exports.updateTipe_kamar = async (request, response) => {
             tipe_kamar.foto = request.file.filename
         }
 
-        Tipe_kamarModel.update(tipe_kamar, { where: { id: id } })
+        Tipe_kamarModel.update(Tipe_kamarModel, { where: { id: idTipe_kamar } })
             .then(result => {
                 return response.json({
                     success: true,
@@ -133,7 +135,6 @@ exports.updateTipe_kamar = async (request, response) => {
             })
             .catch(error => {
                 return response.json({
-
                 })
             })
     })

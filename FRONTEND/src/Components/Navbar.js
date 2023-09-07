@@ -66,7 +66,7 @@ export default class Navbar extends Component {
                                 <>
                                     <NavLink to="/home" className="no-underline text-gray-800 hover:bg-blue-500 hover:text-white px-3 py-3 rounded-md text-sm font-medium" aria-current="page">Home</NavLink>
                                     <NavLink to="/services" className="no-underline text-gray-800 hover:bg-blue-500 hover:text-white px-3 py-3 rounded-md text-sm font-medium " aria-current="page">Services</NavLink>
-                                    <NavLink to="/rooms" className="no-underline text-gray-800 hover:bg-blue-500 hover:text-white px-3 py-3 rounded-md text-sm font-medium " aria-current="page">Rooms</NavLink>
+                                    <NavLink to="/room" className="no-underline text-gray-800 hover:bg-blue-500 hover:text-white px-3 py-3 rounded-md text-sm font-medium " aria-current="page">Rooms</NavLink>
                                     <NavLink to="/mybookings" className="no-underline text-gray-800 hover:bg-blue-500 hover:text-white px-3 py-3 rounded-md text-sm font-medium " aria-current="page">My Bookings</NavLink>
                                 </>
                             ) : (
@@ -74,7 +74,7 @@ export default class Navbar extends Component {
 
                                     <NavLink to="/home" className="no-underline text-gray-800 hover:bg-blue-600 hover:text-white px-3 py-3 rounded-md text-sm font-medium" aria-current="page">Home</NavLink>
                                     <NavLink to="/services" className="no-underline text-gray-800 hover:bg-blue-600 hover:text-white px-3 py-3 rounded-md text-sm font-medium " aria-current="page">Services</NavLink>
-                                    <NavLink to="/rooms" className="no-underline text-gray-800 hover:bg-blue-600 hover:text-white px-3 py-3 rounded-md text-sm font-medium " aria-current="page">Rooms</NavLink>
+                                    <NavLink to="/room" className="no-underline text-gray-800 hover:bg-blue-600 hover:text-white px-3 py-3 rounded-md text-sm font-medium " aria-current="page">Rooms</NavLink>
                                 </>
                             )
                             }

@@ -74,7 +74,7 @@ export default class Rooms extends React.Component {
     }
 
     getTypeRoom = () => {
-        let url = "http://localhost:8080/room-type"
+        let url = "http://localhost:8080/findTipe_kamar"
         axios.get(url)
             .then(response => {
                 this.setState({

@@ -14,6 +14,7 @@ export default class TypeRoom extends React.Component {
         this.state = {
             typeroom: [],
             id: "",
+            searchQuery: "",
             nama_tipe_kamar: "",
             harga: "",
             deskripsi: "",
@@ -38,10 +39,10 @@ export default class TypeRoom extends React.Component {
 
     headerConfig = () => {
         let header = {
-            headers: { Authorization: `Bearer ${this.state.token}` }
-        }
+            headers: { Authorization: `Bearer ${this.state.token}` },
+        };
         return header;
-    }
+    };
 
     handleChange = (e) => {
         this.setState({
@@ -96,9 +97,13 @@ export default class TypeRoom extends React.Component {
             harga: item.harga,
             deskripsi: item.deskripsi,
             foto: item.foto,
-            action: "update"
-        })
-    }
+            action: "update",
+        });
+    };
+
+    handleSearch = (event) => {
+        this.setState({ searchQuery: event.target.value });
+      };
 
     handleSave = (e) => {
         e.preventDefault()
@@ -124,68 +129,73 @@ export default class TypeRoom extends React.Component {
                     }
                 })
         } else {
-            let url = "http://localhost:8080/room-type/update/" + this.state.id_room_type
-            axios.put(url, form, this.headerConfig())
+            let url = "http://localhost:8080/tipe_kamar/updateTipe_kamar/" + this.state.id_room_type;
+            axios
+                .put(url, form, this.headerConfig())
                 .then(response => {
-                    this.getTypeRoom()
-                    this.handleClose()
+                    this.getTypeRoom();
+                    this.handleClose();
                 })
                 .catch(error => {
                     console.log(error)
-                })
+                });
         }
-    }
+    };
 
     handleDrop = (id) => {
         let url = "http://localhost:8080/tipe_kamar/deleteTipe_kamar/" + id;
         if (window.confirm("Are tou sure to delete this type room ? ")) {
-            axios.delete(url, this.headerConfig())
-                .then(response => {
-                    console.log(response.data.message)
-                    this.getTypeRoom()
+            axios
+                .delete(url, this.headerConfig())
+                .then((response) => {
+                    console.log(response.data.message);
+                    this.getTypeRoom();
                 })
-                .catch(error => {
+                .catch((error) => {
                     if (error.response.status === 500) {
                         window.alert("You can't delete this data");
                     }
-                })
+                });
         }
-    }
+    };
 
     _handleFilter = () => {
         let data = {
             keyword: this.state.keyword,
         }
-        let url = "http://localhost:8080/room-type/find/filter"
-        axios.post(url, data)
+        let url = "http://localhost:8080/tipe_kamar/findTipe_kamar/";
+        axios
+            .post(url, data)
             .then(response => {
                 if (response.status === 200) {
                     this.setState({
                         typeroom: response.data.data
-                    })
+                    });
                 } else {
                     alert(response.data.message)
-                    this.setState({ message: response.data.message })
+                    this.setState({ message: response.data.message });
 
                 }
             })
             .catch(error => {
-                console.log("error", error.response.status)
-            })
-    }
+                console.log("error", error.response.status);
+            });
+    };
 
     getTypeRoom = () => {
-        let url = "http://localhost:8080/tipe_kamar/getAllTipe_kamar"
-        axios.get(url)
-            .then(response => {
+        let url = "http://localhost:8080/tipe_kamar/getAllTipe_kamar/";
+        axios
+            .get(url, this.headerConfig())
+            .then((response) => {
                 this.setState({
-                    typeroom: response.data.data
-                })
+                    typeroom: response.data.data,
+                });
+                console.log(response.data.data);
             })
             .catch((error) => {
-                console.log(error)
-            })
-    }
+                console.log(error);
+            });
+    };
 
     checkRole = () => {
         if (this.state.role !== "admin" && this.state.role !== "resepsionis") {
@@ -201,6 +211,11 @@ export default class TypeRoom extends React.Component {
     }
 
     render() {
+        const filteredTypeRoom = this.state.typeroom.filter((item) =>
+        item.nama_tipe_kamar
+        .toLowerCase()
+        .includes(this.state.searchQuery.toLowerCase())
+    );
         return (
             <div class="flex flex-row min-h-screen bg-gray-100 text-gray-800">
                 <Sidebar />
@@ -210,14 +225,16 @@ export default class TypeRoom extends React.Component {
                         <div class="mb-4">
                             <div className="flex items-center">
                                 <div className="flex rounded w-1/2 mx-auto">
-                                    <input
-                                        type="text"
-                                        className="w-4/6 block w-full px-4 py-2 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 "
-                                        placeholder="Cari disini"
-                                        name="keyword"
-                                        value={this.state.keyword}
-                                        onChange={this.handleChange}
-                                    />
+                                <input
+                                    type="text"
+                                    className="w-2/3 block w-full px-4 py-2 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                                    placeholder="Cari disini"
+                                    name="keyword"
+                                    value={this.state.keyword}
+                                    onChange={this.handleChange}
+                                    value={this.state.searchQuery}
+                                    onChange={this.handleSearch}
+                                />
                                     <button className="w-1/8 ml-2 px-4 text-white bg-blue-100 border border-1 border-blue-600 rounded hover:bg-blue-200" onClick={this._handleFilter}>
                                         <FontAwesomeIcon icon={faSearch} color="blue" />
                                     </button>
@@ -230,7 +247,7 @@ export default class TypeRoom extends React.Component {
                             </div>
                         </div>
                         <div class="grid grid-cols-3 gap-4">
-                            {this.state.typeroom.map((item, index) => {
+                            {filteredTypeRoom.map((item, index) => {
                                 return (
                                     <div class="col-span-1">
                                         {/* Card untuk type room */}
@@ -240,7 +257,7 @@ export default class TypeRoom extends React.Component {
                                                     <img class="w-full h-48" src={"http://localhost:8080/" + item.foto} />
                                                     {this.state.role === "admin" &&
                                                         <>
-                                                            <button class='btn' onClick={() => this.handleDrop(item.id_room_type)}><FontAwesomeIcon icon={faTrash} size="lg" color="red" /></button>
+                                                            <button class='btn' onClick={() => this.handleDrop(item.id)}><FontAwesomeIcon icon={faTrash} size="lg" color="red" /></button>
                                                             <button class='btn1' onClick={() => this.handleEdit(item)}><FontAwesomeIcon icon={faPencilSquare} size="xl" color="orange" /></button>
                                                         </>
                                                     }

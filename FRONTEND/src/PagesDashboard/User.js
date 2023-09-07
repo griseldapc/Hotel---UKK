@@ -22,6 +22,7 @@ export default class User extends React.Component {
             foto: "",
             email: "",
             password: "",
+            searchQuery: "",
             role: "",
             token: "",
             action: "",
@@ -96,11 +97,9 @@ export default class User extends React.Component {
             email: "",
             password: "",
             role: "",
-            action: ""
-           
-
-        })
-    }
+            action: "insert",
+        });
+    };
 
     handleEdit = (item) => {
         $("#modal_user").show();
@@ -117,6 +116,10 @@ export default class User extends React.Component {
         })
     }
 
+    handleSearch = (event) => {
+        this.setState({ searchQuery: event.target.value });
+      };
+
     handleSave = (e) => {
         e.preventDefault()
 
@@ -128,14 +131,14 @@ export default class User extends React.Component {
         form.append("password", this.state.password)
         form.append("role", this.state.role)
 
-        let data = {
-            id: this.state.id,
-            nama_user: this.state.nama_user,
-            foto: this.state.foto,
-            email: this.state.email,
-            password: this.state.password,
-            role: this.state.role,
-        }
+        // let data = {
+        //     id: this.state.id,
+        //     nama_user: this.state.nama_user,
+        //     foto: this.state.foto,
+        //     email: this.state.email,
+        //     password: this.state.password,
+        //     role: this.state.role,
+        // }
 
         if (this.state.action === "insert") {
             let url = "http://localhost:8080/user/addUser"
@@ -166,20 +169,21 @@ export default class User extends React.Component {
     }
 
     handleDrop = (id) => {
-        let url = "http://localhost:8080/user/delete/" + id
+        let url = "http://localhost:8080/user/deleteUser/" + id
         if (window.confirm("Are you sure to delete this customer ? ")) {
-            axios.delete(url, this.headerConfig())
-                .then(response => {
+            axios
+                .delete(url, this.headerConfig())
+                .then((response) => {
                     console.log(response.data.message)
-                    this.getUser()
+                    this.getUser();
                 })
                 .catch(error => {
                     if (error.response.status === 500) {
                         window.alert("You can't delete this data");
                     }
-                })
+                });
         }
-    }
+    };
 
     getUser = () => {
         let url = "http://localhost:8080/user/getAllUser";
@@ -189,6 +193,7 @@ export default class User extends React.Component {
                 this.setState({
                     user: response.data.data,
                 });
+                console.log(response.data.data);
             })
             .catch((error) => {
                 console.log(error);
@@ -209,6 +214,11 @@ export default class User extends React.Component {
     }
 
     render() {
+        const filteredUsers = this.state.user.filter((item) =>
+      item.nama_user
+        .toLowerCase()
+        .includes(this.state.searchQuery.toLowerCase())
+    );
         return (
 
             <div class="flex flex-row min-h-screen bg-gray-100 text-gray-800">
@@ -228,6 +238,8 @@ export default class User extends React.Component {
                                     name="keyword"
                                     value={this.state.keyword}
                                     onChange={this.handleChange}
+                                    value={this.state.searchQuery}
+                                    onChange={this.handleSearch}
                                 />
                                 <button className="w-1/8 ml-2 px-4 text-white bg-blue-100 border border-1 border-blue-600 rounded hover:bg-blue-200" onClick={this._handleFilter}>
                                     <FontAwesomeIcon icon={faSearch} color="blue" />
@@ -289,7 +301,7 @@ export default class User extends React.Component {
                                                 </tr>
                                             </thead>
                                             <tbody className="bg-white divide-y divide-gray-200">
-                                                {this.state.user.map((item, index) => {
+                                                {filteredUsers.map((item, index) => {
                                                     return (
                                                         <tr key={index}>
                                                             <td className="px-6 py-4 whitespace-nowrap">

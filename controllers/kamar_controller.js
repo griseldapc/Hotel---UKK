@@ -20,15 +20,15 @@ exports.getAllKamar = async (request, response) => {
 };
 
 exports.findKamar = async (request, response) => {
-  // let keyword = request.body.keyword;
-let nomor_kamar = request.body.nomor_kamar;
-let tipeKamarId = request.body.tipeKamarId;
+let keyword = request.body.keyword;
+// let nomor_kamar = request.body.nomor_kamar;
+// let tipeKamarId = request.body.tipeKamarId;
 
   let kamars = await kamarModel.findAll({
     where: {
       [Op.and]: [
-        { nomor_kamar: { [Op.substring]: nomor_kamar } },
-        { tipeKamarId: { [Op.substring]: tipeKamarId } },
+        { nomor_kamar: { [Op.substring]: keyword } },
+        { tipeKamarId: { [Op.substring]: keyword } },
       ],
     },
   });
@@ -83,7 +83,7 @@ exports.updateKamar = async (request, response) => {
   };
   let id = request.params.id;
   kamarModel
-    .update(dataKamar, { where: { id: id } })
+    .update(dataKamar, { where: { id: id }})
     .then((result) => {
       return response.json({
         success: true,
