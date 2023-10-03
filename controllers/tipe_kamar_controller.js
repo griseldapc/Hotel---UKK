@@ -5,6 +5,7 @@ const path = require("path")
 const upload = require(`./upload_foto`).single(`foto`)
 const fs = require(`fs`)
 const md5 = require(`md5`)
+const { Await } = require("react-router-dom")
 
 
 exports.getAllTipe_kamar = async (request, response) => {
@@ -94,48 +95,94 @@ exports.deleteTipe_kamar = (request, response) => {
 
 //  
 
+// exports.updateTipe_kamar = async (request, response) => {
+//     upload(request, response, async error => {
+//         if (error) {
+//             return response.json({ message: error })
+//         }
+//         let idTipe_kamar = request.params.id
+//         let tipe_kamar = {
+//             nama_tipe_kamar: request.body.nama_tipe_kamar,
+//             // foto: request.file.filename,
+//             harga: request.body.harga,
+//             deskripsi: request.body.deskripsi,
+//         }
+
+//         if(request.file && request.file.filename) {
+//             tipe_kamar.foto = request.file.filename
+//         }
+
+//         if (request.file) {
+//             const selectedTipe_kamar = await Tipe_kamarModel.findOne({
+//                 where: { id: idTipe_kamar }
+//             })
+
+//             const oldFotoTipe_kamar = selectedTipe_kamar.foto
+//             const pathFoto = path.join(__dirname, `./foto`, oldFotoTipe_kamar)
+
+//             if (fs.existsSync(pathFoto)) {
+//                 fs.unlink(pathFoto, error =>
+//                     console.log(error))
+//             }
+//             tipe_kamar.foto = request.file.filename
+//         }
+
+//         Tipe_kamarModel.update(Tipe_kamarModel, { where: { id: idTipe_kamar } })
+//             .then(result => {
+//                 return response.json({
+//                     success: true,
+//                     message: `Data terupdate`
+//                 })
+//             })
+//             .catch(error => {
+//                 return response.json({
+//                 })
+//             })
+//     })
+// }
+
+
 exports.updateTipe_kamar = async (request, response) => {
-    upload(request, response, async error => {
-        if (error) {
-            return response.json({ message: error })
-        }
-        let idTipe_kamar = request.params.id
-        let tipe_kamar = {
-            nama_tipe_kamar: request.body.nama_tipe_kamar,
-            // foto: request.file.filename,
-            harga: request.body.harga,
-            deskripsi: request.body.deskripsi,
-        }
-
-        if(request.file && request.file.filename) {
-            tipe_kamar.foto = request.file.filename
-        }
-
-        if (request.file) {
-            const selectedTipe_kamar = await Tipe_kamarModel.findOne({
-                where: { id: idTipe_kamar }
-            })
-
-            const oldFotoTipe_kamar = selectedTipe_kamar.foto
-            const pathFoto = path.join(__dirname, `./foto`, oldFotoTipe_kamar)
-
-            if (fs.existsSync(pathFoto)) {
-                fs.unlink(pathFoto, error =>
-                    console.log(error))
-            }
-            tipe_kamar.foto = request.file.filename
+    upload(request, response, async (err) => {
+      if (err) {
+        return response.json({ message: err });
+      }
+      let idTipe_kamar = request.params.id;
+      let dataTipekamar = {
+      nama_tipe_kamar: request.body.nama_tipe_kamar,
+      harga: request.body.harga,
+      deskripsi: request.body.deskripsi
+    };
+    if(request.file && request.file.filename) {
+        dataTipekamar.foto = request.file.filename
+    }
+  
+      if (request.file) {
+        const selectedTipekamar = await Tipe_kamarModel.findOne({
+          where: { id: idTipe_kamar },
+        });
+        console.log(selectedTipekamar);
+        const oldFotoTipekamar = selectedTipekamar.foto;
+  
+        const pathImage = path.join(__dirname, `/../foto`, oldFotoTipekamar);
+        if (fs.existsSync(pathImage)) {
+          fs.unlink(pathImage, (error) => console.log(error));
         }
 
-        Tipe_kamarModel.update(Tipe_kamarModel, { where: { id: idTipe_kamar } })
-            .then(result => {
-                return response.json({
-                    success: true,
-                    message: `Data terupdate`
-                })
-            })
-            .catch(error => {
-                return response.json({
-                })
-            })
-    })
-}
+      }
+      Tipe_kamarModel
+      .update(dataTipekamar, { where: { id: idTipe_kamar } })
+      .then((result) => {
+        return response.json({
+          success: true,
+          message: `Data tipe kamar has been updated`,
+        });
+      })
+      .catch((error) => {
+        return response.json({
+          success: false,
+          message: error.message,
+        });
+      });
+  });
+};

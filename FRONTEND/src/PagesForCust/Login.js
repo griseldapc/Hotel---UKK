@@ -6,8 +6,9 @@ export default class Login extends React.Component {
     constructor() {
         super()
         this.state = {
-            email_customer: "",
-            password_customer: "",
+            email: "",
+            password: "",
+            role: "",
             isModalOpen: false,
             logged: false,
         }
@@ -22,17 +23,17 @@ export default class Login extends React.Component {
     handleLogin = (e) => {
         e.preventDefault()
         let data = {
-            email: this.state.email_customer,
-            password: this.state.password_customer
+            email: this.state.email,
+            password: this.state.password
         }
-        let url = "http://localhost:8080/customer/login"
+        let url = "http://localhost:8080/customer/loginCust"
         axios.post(url, data)
             .then(response => {
-                this.setState({ logged: response.data.data.logged })
+                this.setState({ logged: true })
                 if (response.status === 200) {
-                    let id = response.data.data.id_customer
+                    let id = response.data.data.id
                     let token = response.data.data.token
-                    let role = response.data.data.role
+                    let role = "customer"
                     let email = response.data.data.email
                     localStorage.setItem("id", id)
                     localStorage.setItem("token", token)
@@ -66,13 +67,13 @@ export default class Login extends React.Component {
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
                                     Email
                                 </label>
-                                <input class="shadow appearance-none border border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="email_customer" name="email_customer" placeholder="Email" value={this.state.email_customer} onChange={this.handleChange} required />
+                                <input class="shadow appearance-none border border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} required />
                             </div>
                             <div class="mb-6">
                                 <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
                                     Password
                                 </label>
-                                <input class="shadow appearance-none border border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password_customer" name="password_customer" type="password" placeholder="Password" value={this.state.password_customer} onChange={this.handleChange} required />
+                                <input class="shadow appearance-none border border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required />
                             </div>
                             <div class="flex items-center justify-between">
                                 <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 w-full rounded focus:outline-none focus:shadow-outline" type="submit">

@@ -6,6 +6,7 @@ export default class Login extends React.Component {
     constructor() {
         super()
         this.state = {
+            nama_user:"",
             email_user: "",
             password_user: "",
             isModalOpen: false,
@@ -76,14 +77,14 @@ export default class Login extends React.Component {
                                 <input class="shadow appearance-none border border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password_user" type="password" placeholder="Password" value={this.state.password_user} onChange={this.handleChange} required />
                             </div>
                             <div class="flex items-center justify-between">
-                                <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-2 w-full rounded focus:outline-none focus:shadow-outline" type="submit">
+                                <button class="bg-gray-900 hover:bg-blue-500 text-white font-bold py-2 w-full rounded focus:outline-none focus:shadow-outline" type="submit">
                                     Login
                                 </button>
                             </div>
                         </form>
                     </div>
                     <div class="w-1/2 bg-gray-500 text-center">
-                        <img src="/assets/loginnn.jpeg" className="w-screen h-screen" alt="" />
+                        <img src="/assets/PhotoInLogin.png" className="w-screen h-screen" alt="" />
                     </div>
                 </div>
             </div>

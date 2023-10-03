@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../Components/Sidebar";
-import Header from "../Components/Header";
+// import Header from "../Components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilSquare, faSearch } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -197,26 +197,26 @@ export default class HistoryTransaksi extends React.Component {
     return (
       <div class="flex flex-row min-h-screen bg-gray-100 text-gray-800">
         <Sidebar />
-        <main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
-          <Header />
+        <main class="main flex flex-col flex-grow -ml-64 md:ml-60 transition-all duration-150 ease-in">
+          {/* <Header /> */}
           <div class="main-content flex flex-col flex-grow p-4">
-            <h1 class="font-bold text-xl text-black-700">
+            {/* <h1 class="font-bold text-xl text-black-700">
               Daftar History Transaksi Customer
             </h1>
-            <p class="text-gray-700">For History Booking Room</p>
+            <p class="text-gray-700">For History Booking Room</p> */}
 
             <div className="flex mt-2 flex-row-reverse">
               <div className="flex rounded w-1/3 mr-4">
                 <input
                   type="text"
-                  className="w-2/3 block w-full px-4 py-2 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 "
+                  className="w-11/12 block w-full px-4 py-2 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 "
                   placeholder="Search..."
                   name="keyword"
                   value={this.state.keyword}
                   onChange={this.handleChange}
                 />
                 <button
-                  className="w-1/3 ml-2 px-4 text-white bg-blue-600 rounded hover:bg-blue-700"
+                  className="w-1/3 ml-2 px-4 text-white dark:bg-gray-900 rounded hover:bg-blue-700"
                   onClick={this._handleFilter}
                 >
                   <FontAwesomeIcon icon={faSearch} size="" />

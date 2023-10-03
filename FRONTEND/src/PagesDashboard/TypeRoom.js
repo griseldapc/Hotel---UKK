@@ -1,7 +1,7 @@
 import React from 'react'
 import LinesEllipsis from 'react-lines-ellipsis';
 import Sidebar from '../Components/Sidebar'
-import Header from '../Components/Header';
+// import Header from '../Components/Header';
 import '../styles/room.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilSquare, faPlus, faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -80,7 +80,7 @@ export default class TypeRoom extends React.Component {
     handleAdd = () => {
         $("#modal_typeroom").show()
         this.setState({
-            id_room_type: "",
+            id: "",
             nama_tipe_kamar: "",
             harga: "",
             deskripsi: "",
@@ -92,7 +92,7 @@ export default class TypeRoom extends React.Component {
     handleEdit = (item) => {
         $("#modal_typeroom").show()
         this.setState({
-            id_room_type: item.id_room_type,
+            id: item.id,
             nama_tipe_kamar: item.nama_tipe_kamar,
             harga: item.harga,
             deskripsi: item.deskripsi,
@@ -109,7 +109,7 @@ export default class TypeRoom extends React.Component {
         e.preventDefault()
 
         let form = new FormData()
-        form.append("id_room_type", this.state.id_room_type)
+        form.append("id", this.state.id)
         form.append("nama_tipe_kamar", this.state.nama_tipe_kamar)
         form.append("harga", this.state.harga)
         form.append("deskripsi", this.state.deskripsi)
@@ -129,9 +129,9 @@ export default class TypeRoom extends React.Component {
                     }
                 })
         } else {
-            let url = "http://localhost:8080/tipe_kamar/updateTipe_kamar/" + this.state.id_room_type;
+            let url = "http://localhost:8080/tipe_kamar/updateTipe_kamar/" + this.state.id;
             axios
-                .put(url, form, this.headerConfig())
+                .put(url, form, this.headerConfig()) 
                 .then(response => {
                     this.getTypeRoom();
                     this.handleClose();
@@ -219,8 +219,8 @@ export default class TypeRoom extends React.Component {
         return (
             <div class="flex flex-row min-h-screen bg-gray-100 text-gray-800">
                 <Sidebar />
-                <main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
-                    <Header />
+                <main class="main flex flex-col flex-grow -ml-64 md:ml-60 transition-all duration-150 ease-in">
+                    {/* <Header /> */}
                     <div class="main-content flex flex-col flex-grow p-4">
                         <div class="mb-4">
                             <div className="flex items-center">
@@ -239,7 +239,7 @@ export default class TypeRoom extends React.Component {
                                         <FontAwesomeIcon icon={faSearch} color="blue" />
                                     </button>
                                     {this.state.role === "admin" &&
-                                        <button className="w-1/5 ml-2 px-4 text-white bg-blue-600 rounded hover:bg-blue-700" onClick={() => this.handleAdd()}>
+                                        <button className="w-1/5 ml-2 px-4 text-white bg-gray-900 rounded hover:bg-blue-700" onClick={() => this.handleAdd()}>
                                             <FontAwesomeIcon icon={faPlus} /> Add
                                         </button>
                                     }
@@ -274,7 +274,7 @@ export default class TypeRoom extends React.Component {
                                                     </p>
                                                 </div>
                                                 <div class="px-6 pt-4 pb-2">
-                                                    <button class="mb-2 ml-48 bg-blue-600 hover:bg-blue-700 text-white font-bold p-2 w-1/3 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => this.handleDetail(item)}>
+                                                    <button class="mb-2 ml-0 bg-gray-900 hover:bg-blue-700 text-white font-bold p-2 w-1/3 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => this.handleDetail(item)}>
                                                         Detail
                                                     </button>
 

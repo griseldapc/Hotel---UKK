@@ -41,6 +41,7 @@ exports.login = async (req, res) => {
                 id: findUser.id,
                 email: findUser.email,
                 role: findUser.role,
+                nama_user: findUser.nama_user
             },
         });
     } catch (err) {

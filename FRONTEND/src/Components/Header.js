@@ -33,9 +33,9 @@ export default class Header extends React.Component {
             <header class="header bg-white shadow py-4 px-4">
                 <div class="header-content flex items-center flex-row">
                     <form action="#">
-                        <div class="hidden md:flex relative">
+                        {/* <div class="hidden md:flex relative">
                         <h1 class="font-bold text-2xl text-gray-700">Dashboard</h1>
-                        </div> 
+                        </div>  */}
                         
                         <div class="flex md:hidden">
                             <a href="#" class="flex items-center justify-center h-10 w-10 border-transparent">

@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../Components/Sidebar";
-import Header from "../Components/Header";
+// import Header from "../Components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faPlus,
@@ -223,11 +223,11 @@ export default class User extends React.Component {
 
             <div class="flex flex-row min-h-screen bg-gray-100 text-gray-800">
                 <Sidebar />
-                <main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
-                    <Header />
+                <main class="main flex flex-col flex-grow -ml-64 md:ml-60 transition-all duration-150 ease-in">
+                    {/* <Header /> */}
                     <div class="main-content flex flex-col flex-grow p-4">
-                        <h1 class="font-bold text-xl text-black-700">Daftar User</h1>
-                        <p class="text-gray-700">For admin and Resepsionis</p>
+                        {/* <h1 class="font-bold text-xl text-black-700">Daftar User</h1>
+                        <p class="text-gray-700">For admin and Resepsionis</p> */}
 
                         <div className="flex mt-2 flex-row-reverse mr-4">
                             <div className="flex rounded w-1/2">
@@ -245,7 +245,7 @@ export default class User extends React.Component {
                                     <FontAwesomeIcon icon={faSearch} color="blue" />
                                 </button>
                                 {this.state.role === "admin" &&
-                                    <button className="w-1/3 ml-2 px-4 text-white bg-blue-600 rounded hover:bg-blue-700" onClick={() => this.handleAdd()}>
+                                    <button className="w-1/3 ml-2 px-4 text-white dark:bg-gray-900 rounded hover:bg-blue-700" onClick={() => this.handleAdd()}>
                                         <FontAwesomeIcon icon={faPlus} size="" /> Add
                                     </button>
                                 }

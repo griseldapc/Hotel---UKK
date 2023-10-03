@@ -103,7 +103,7 @@ export default class Home extends React.Component {
             guest_name: this.state.guest_name,
             total_room: this.state.total_room
         }
-        let url = "http://localhost:8080/booking/add"
+        let url = "http://localhost:8080/pemesanan/addPemesanan"
         axios.post(url, form, this.headerConfig())
             .then(response => {
                 this.getBooking()
@@ -157,7 +157,7 @@ export default class Home extends React.Component {
     }
 
     getTypeRoom = () => {
-        let url = "http://localhost:8080/room-type"
+        let url = "http://localhost:8080/tipe_kamar/getAllTipe_kamar"
         axios.get(url)
             .then(response => {
                 this.setState({
@@ -354,7 +354,7 @@ export default class Home extends React.Component {
                                             <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-black" placeholder="Jenis Room Type" name="id_room_type" value={this.state.id_room_type} onChange={this.handleChange} required>
                                                 <option value="">Choose Room Type</option>
                                                 {this.state.typeroom.map((item, index) => (
-                                                    <option value={item.id_room_type}>{item.name_room_type}</option>
+                                                    <option value={item.id_room_type}>{item.nama_tipe_kamar}</option>
                                                 ))}
                                             </select>
                                         </div>
@@ -370,7 +370,7 @@ export default class Home extends React.Component {
                                             <label for="check_out_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Check-Out Date</label>
                                             <input type="date" name="check_out_date" id="check_out_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Choose check out date" value={this.state.check_out_date} onChange={this.handleChange} required />
                                         </div>
-                                        <div>
+                                        {/* <div>
                                             <label for="id_user" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Resepsionis</label>
                                             <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-black" placeholder="Jenis Room Type" name="id_user" value={this.state.id_user} onChange={this.handleChange} required>
                                                 <option value="">Confirm your booking with</option>
@@ -378,7 +378,7 @@ export default class Home extends React.Component {
                                                     <option value={item.id_user}>{item.user_name}</option>
                                                 ))}
                                             </select>
-                                        </div>
+                                        </div> */}
                                         <button type="submit" class="w-full text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Simpan</button>
 
                                     </form>
